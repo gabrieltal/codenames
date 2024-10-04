@@ -1,11 +1,11 @@
 import './App.css'
-import { Board } from './components/Board';
+import { BoardComponent } from './components/BoardComponent';
 
 const App = () => {
   console.log('app render');
   return (
     <>
-      <Board />
+      <BoardComponent />
     </>
   );
 };
