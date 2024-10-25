@@ -1,5 +1,11 @@
 # codenames
 
+- [logic](#logic)
+- [setup](#setup)
+- [run client](#run-client)
+- [run server](#run-server)
+- [play](#play)
+
 ## logic
 
 - one team has 8
@@ -8,29 +14,28 @@
 - 1 assassin card (black)
 - 7 innocent bystanders (beige)
 
-## setup client
+## setup
+
+- client uses javascript, node, npm, vite, typescript
+- server uses ruby, bundler, rails
+
+install dependencies
 
 ```
 cd client
 npm install
+cd ..
+cd server
+bundle install
 ```
 
 ## run client
 
+- run server first
+
 ```
 cd client
 vite dev
-```
-
-## use client
-
-http://localhost:5173/
-
-## setup server
-
-```
-cd server
-bundle install
 ```
 
 ## run server
@@ -40,6 +45,6 @@ cd server
 bundle exec rails s
 ```
 
-## use server
+## play
 
-http://localhost:3000/
+http://localhost:5173/
