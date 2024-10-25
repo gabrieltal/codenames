@@ -91,6 +91,8 @@ GEM
     fiber-storage (1.0.0)
     globalid (1.2.1)
       activesupport (>= 6.1)
+    graphiql-rails (1.10.1)
+      railties
     graphql (2.3.19)
       base64
       fiber-storage
@@ -263,6 +265,7 @@ DEPENDENCIES
   bootsnap
   brakeman
   debug
+  graphiql-rails
   graphql (~> 2.3)
   puma (>= 5.0)
   rails (~> 7.2.1, >= 7.2.1.2)
