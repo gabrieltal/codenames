@@ -3,10 +3,12 @@
 module Types
   class MutationType < Types::BaseObject
     # TODO: remove me
-    field :test_field, String, null: false,
-      description: "An example field added by the generator"
-    def test_field
-      "Hello World"
+    field :flip_card, CardType, null: false do
+      argument :index, Integer, required: true
+    end
+    def flip_card(index:)
+      Rails.logger.debug("Flipping card #{index}")
+      { word: "water", flipped: false, color: "blue" }
     end
   end
 end

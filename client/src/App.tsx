@@ -1,7 +1,7 @@
 import { ApolloClient, InMemoryCache, OperationVariables, gql } from "@apollo/client/core/index.js";
 import './App.css'
 import { BoardComponent } from './components/BoardComponent';
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Card } from "./models/Card";
 
 interface Data {
@@ -27,6 +27,8 @@ const App = () => {
   // flipCard(index, currentPlayer)
   // => all players notified & get new game state
 
+  const [gameState, setGameState] = useState(null as any);
+
   useEffect(() => {
     console.log("App.load");
     (async () => {
@@ -50,13 +52,34 @@ const App = () => {
       console.log(`data.gameState.board: ${data.gameState.board.length}`);
       console.log(`data.gameState.board[0].word: ${data.gameState.board[0].word}`);
       console.log("App.load.query done");
+      setGameState(data.gameState);
     })();
     console.log("App.load done");
   }, []);
   
+  const flipCard = async (index: number) => {
+    console.log(`App.flipCard(${index})`);
+    const client = new ApolloClient({
+      uri: "/api/graphql",
+      cache: new InMemoryCache(),
+    });
+    const results = await client.mutate({
+      mutation: gql`
+        mutation FlipCard($index: Int!) {
+          flipCard(index: $index) {
+            color
+            flipped
+            word
+          }
+        }
+      `,
+      variables: {index},
+    });
+  }
+
   return (
     <>
-      <BoardComponent />
+      <BoardComponent gameState={gameState} flipCard={flipCard} />
     </>
   );
 };
