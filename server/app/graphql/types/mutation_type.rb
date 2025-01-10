@@ -8,7 +8,9 @@ module Types
     end
     def flip_card(index:)
       Rails.logger.debug("Flipping card #{index}")
-      { word: "water", flipped: false, color: "blue" }
+      card = Card.find_by(index:)
+      card.update!(flipped: true)
+      card
     end
   end
 end

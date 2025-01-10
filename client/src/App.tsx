@@ -28,53 +28,56 @@ const App = () => {
   // => all players notified & get new game state
 
   const [gameState, setGameState] = useState(null as any);
+  const getGameState = async () => {
+    console.log("App.load.query start");
+    const client = new ApolloClient({
+      uri: "/api/graphql",
+      cache: new InMemoryCache(),
+    });
+    const {data} = await client.query<Data, OperationVariables>({query: gql`
+      query GameState {
+        gameState {
+          board {
+            color
+            flipped
+            word
+          }
+        }
+      }
+    `});
+    console.log(`data: ${JSON.stringify(data, null, 2)}`);
+    console.log(`data.gameState.board: ${data.gameState.board.length}`);
+    console.log(`data.gameState.board[0].word: ${data.gameState.board[0].word}`);
+    console.log("App.load.query done");
+    setGameState(data.gameState);
+  };
 
   useEffect(() => {
     console.log("App.load");
-    (async () => {
-      console.log("App.load.query start");
-      const client = new ApolloClient({
-        uri: "/api/graphql",
-        cache: new InMemoryCache(),
-      });
-      const {data} = await client.query<Data, OperationVariables>({query: gql`
-        query GameState {
-          gameState {
-            board {
-              color
-              flipped
-              word
-            }
-          }
-        }
-      `});
-      console.log(`data: ${JSON.stringify(data, null, 2)}`);
-      console.log(`data.gameState.board: ${data.gameState.board.length}`);
-      console.log(`data.gameState.board[0].word: ${data.gameState.board[0].word}`);
-      console.log("App.load.query done");
-      setGameState(data.gameState);
-    })();
+    getGameState();
     console.log("App.load done");
   }, []);
-  
+
   const flipCard = async (index: number) => {
     console.log(`App.flipCard(${index})`);
     const client = new ApolloClient({
       uri: "/api/graphql",
       cache: new InMemoryCache(),
     });
-    const results = await client.mutate({
+    await client.mutate({
       mutation: gql`
         mutation FlipCard($index: Int!) {
           flipCard(index: $index) {
             color
             flipped
             word
+            index
           }
         }
       `,
       variables: {index},
     });
+    getGameState();
   }
 
   return (

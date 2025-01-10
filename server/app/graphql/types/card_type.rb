@@ -5,5 +5,6 @@ module Types
     field :word, String
     field :flipped, Boolean
     field :color, String
+    field :index, Integer
   end
 end
