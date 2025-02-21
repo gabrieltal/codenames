@@ -44,6 +44,29 @@ vite dev
 cd server
 bundle exec rails s
 ```
+## game graphql query
+```query Game($id: Int!) {
+  game(id: $id) {
+    cards {
+      color
+      flipped
+      index
+      word
+    }
+    logs {
+    clue
+    message
+    player
+    winningTeam
+  }
+    players {
+    name
+    spyMaster
+    team
+  }
+    urlIdentifier
+  }
+}```
 
 ## play
 

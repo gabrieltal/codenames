@@ -2,11 +2,11 @@
 
 module Types
   class QueryType < Types::BaseObject
-    field :game_state, GameStateType, null: true
-    def game_state
-      {
-        board: Card.all.order(index: :asc)
-      }
+    field :game, GameType, null: true do
+      argument :id, Int
+    end
+    def game(id:)
+      Game.find(id)
     end
   end
 end
