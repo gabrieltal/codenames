@@ -7,6 +7,17 @@
 #   ["Action", "Comedy", "Drama", "Horror"].each do |genre_name|
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
+
+game = Game.create!(url_identifier: 'smoke-tree-nut')
+[
+  { name: 'A', spy_master: true, team: 'blue', game: },
+  { name: 'B', spy_master: true, team: 'orange', game: },
+  { name: 'C', spy_master: false, team: 'blue', game: },
+  { name: 'D', spy_master: false, team: 'orange', game: },
+].each do |player|
+  Player.create!(**player)
+end
+
 [
   { word: "water", flipped: false, color: "blue" },
   { word: "dog", flipped: false, color: "black" },
@@ -34,5 +45,5 @@
   { word: "ghost", flipped: false, color: "orange" },
   { word: "meow", flipped: false, color: "blue" }
 ].each_with_index do |obj, index|
-  Card.create!(**obj.merge(index:))
+  Card.create!(game:, **obj.merge(index:))
 end
