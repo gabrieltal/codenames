@@ -4,6 +4,7 @@
 - [setup](#setup)
 - [run client](#run-client)
 - [run server](#run-server)
+- [game graphql query](#game-graphql-query)
 - [play](#play)
 
 ## logic
@@ -45,8 +46,16 @@ cd server
 bundle exec rails s
 ```
 ## game graphql query
-```query Game($id: Int!) {
+
+```
+query Game($id: Int!) {
   game(id: $id) {
+    urlIdentifier
+    players {
+      name
+      spyMaster
+      team
+    }
     cards {
       color
       flipped
@@ -54,19 +63,14 @@ bundle exec rails s
       word
     }
     logs {
-    clue
-    message
-    player
-    winningTeam
+      clue
+      message
+      player
+      winningTeam
+    }
   }
-    players {
-    name
-    spyMaster
-    team
-  }
-    urlIdentifier
-  }
-}```
+}
+```
 
 ## play
 
