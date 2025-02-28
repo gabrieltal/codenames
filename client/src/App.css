@@ -6,6 +6,75 @@
   background-color: #666;
 }
 
+.game {
+  display: flex;
+  flex-direction: row;
+  align-items: stretch;
+  gap: 1rem;
+}
+
+.log {
+  background-color: pink;
+  width: 20rem;
+}
+
+.log-entry {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;  
+  gap: .5rem;
+}
+
+.player {
+  font-weight: bold;
+}
+
+.player.orange {
+  background-color: orange;
+}
+
+.player.blue {
+  background-color: blue;
+}
+
+.clue {
+  text-transform: uppercase;
+  background-color: grey;
+}
+
+.guess {
+  text-transform: uppercase;
+}
+
+.guess.blue {
+  color: blue;
+}
+
+.guess.orange {
+  color: orange
+}
+
+.guess.beige {
+  color: beige
+}
+
+.guess.black {
+  color: black
+}
+
+.win {
+  text-transform: uppercase;
+  flex: auto
+}
+
+.win.blue {
+  color: blue
+}
+
+.win.orange {
+  color: orange
+}
+
 .card {
   padding: 2em;
   color: white;

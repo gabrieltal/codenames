@@ -10,10 +10,10 @@
 
 game = Game.create!(url_identifier: 'smoke-tree-nut')
 [
-  { name: 'A', spy_master: true, team: 'blue', game: },
-  { name: 'B', spy_master: true, team: 'orange', game: },
-  { name: 'C', spy_master: false, team: 'blue', game: },
-  { name: 'D', spy_master: false, team: 'orange', game: },
+  { name: 'liv', spy_master: true, team: 'blue', game: },
+  { name: 'gabe', spy_master: true, team: 'orange', game: },
+  { name: 'Christine', spy_master: false, team: 'blue', game: },
+  { name: 'alex', spy_master: false, team: 'orange', game: },
 ].each do |player|
   Player.create!(**player)
 end
@@ -46,4 +46,18 @@ end
   { word: "meow", flipped: false, color: "blue" }
 ].each_with_index do |obj, index|
   Card.create!(game:, **obj.merge(index:))
+end
+
+[
+  { player_name: "liv", message: "gives clue", clue: "wet 1" },
+  { player_name: "christine", message: "taps", guess: "water" },
+  { player_name: "christine", message: "taps", guess: "leaf" },
+  { player_name: "christine", message: "ends guessing" },
+  { player_name: "gabe", message: "gives clue", clue: "small 3" },
+  { player_name: "alex", message: "taps", guess: "shrink" },
+  { player_name: "alex", message: "taps", guess: "dog" },
+  { message: "blue team wins!" },
+  { message: "orange team wins!" }
+].each_with_index do | obj, index|
+  Log.create!(game:, **obj.merge(index:))
 end

@@ -5,11 +5,11 @@ import { useEffect, useState } from "react";
 import { Card } from "./models/Card";
 
 interface Data {
-  gameState: GameState;
+  game: Game;
 };
 
-interface GameState {
-  board: Array<Card>;
+interface Game {
+  cards: Array<Card>;
 };
 
 const App = () => {
@@ -34,22 +34,39 @@ const App = () => {
       uri: "/api/graphql",
       cache: new InMemoryCache(),
     });
-    const {data} = await client.query<Data, OperationVariables>({query: gql`
-      query GameState {
-        gameState {
-          board {
-            color
-            flipped
-            word
+    const {data} = await client.query<Data, OperationVariables>({
+      query: gql`
+        query Game($id: Int!) {
+          game(id: $id) {
+            urlIdentifier
+            players {
+              name
+              spyMaster
+              team
+            }
+            cards {
+              color
+              flipped
+              index
+              word
+            }
+            logs {
+              clue
+              message
+              guess
+              player
+              winningTeam
+            }
           }
         }
-      }
-    `});
+      `,
+      variables: {id: 1},
+  });
     console.log(`data: ${JSON.stringify(data, null, 2)}`);
-    console.log(`data.gameState.board: ${data.gameState.board.length}`);
-    console.log(`data.gameState.board[0].word: ${data.gameState.board[0].word}`);
+    // console.log(`data.gameState.board: ${data.gameState.board.length}`);
+    // console.log(`data.gameState.board[0].word: ${data.gameState.board[0].word}`);
     console.log("App.load.query done");
-    setGameState(data.gameState);
+    setGameState(data.game);
   };
 
   useEffect(() => {
@@ -81,9 +98,53 @@ const App = () => {
   }
 
   return (
-    <>
+    <div className="game">
       <BoardComponent gameState={gameState} flipCard={flipCard} />
-    </>
+      <div className="log">
+        <div className="log-entry">
+          <div className="player blue">liv</div>
+          <div className="message">gives clue</div>
+          <div className="clue">green 1</div>
+        </div>
+        <div className="log-entry">
+          <div className="player blue">christine</div>
+          <div className="message">taps</div>
+          <div className="guess blue">leaf</div>
+        </div>
+        <div className="log-entry">
+          <div className="player blue">christine</div>
+          <div className="message">taps</div>
+          <div className="guess beige">leaf</div>
+        </div>
+        <div className="log-entry">
+          <div className="player blue">christine</div>
+          <div className="message">ends guessing</div>
+        </div>
+        <div className="log-entry">
+          <div className="player orange">gabe</div>
+          <div className="message">gives clue</div>
+          <div className="clue">bad 5</div>
+        </div>
+        <div className="log-entry">
+          <div className="player orange">alex</div>
+          <div className="message">taps</div>
+          <div className="guess orange">tea</div>
+        </div>
+        <div className="log-entry">
+          <div className="player orange">alex</div>
+          <div className="message">taps</div>
+          <div className="guess black">tea</div>
+        </div>
+        <div className="log-entry">
+          <div className="win blue">blue team wins</div>
+        </div>
+        <div className="log-entry">
+          <div className="win orange">orange team wins</div>
+        </div>
+
+
+      </div>
+    </div>
   );
 };
 

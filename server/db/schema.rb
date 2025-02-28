@@ -31,6 +31,7 @@ ActiveRecord::Schema[7.2].define(version: 2025_02_21_160845) do
     t.integer "game_id", null: false
     t.string "clue"
     t.string "message"
+    t.string "guess"
     t.string "winning_team"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false

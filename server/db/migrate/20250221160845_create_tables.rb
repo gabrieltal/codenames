@@ -26,6 +26,7 @@ class CreateTables < ActiveRecord::Migration[7.2]
       t.belongs_to :game, null: false
       t.string :clue, null: true
       t.string :message, null: true
+      t.string :guess, null: true
       t.string :winning_team, null: true
 
       t.timestamps
